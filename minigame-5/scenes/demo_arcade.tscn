@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d2xf4wuh2u4t6"]
+[gd_scene load_steps=26 format=3 uid="uid://d2xf4wuh2u4t6"]
 
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://scenes/vehicle_controller.tscn" id="1_lup1j"]
 [ext_resource type="PackedScene" uid="uid://fo6kt54q87tf" path="res://scenes/arcade_car.tscn" id="2_oiv4q"]
@@ -12,6 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://d1erbx2oq3d43" path="res://scenes/ramp.tscn" id="11_yeqkk"]
 [ext_resource type="PackedScene" uid="uid://dgohjwo5nix6w" path="res://scenes/road.tscn" id="12_shk6o"]
 [ext_resource type="PackedScene" uid="uid://d1ndnntjr4qhg" path="res://scenes/ground.tscn" id="13_qr4q7"]
+[ext_resource type="PackedScene" uid="uid://dkeqxhpma7nvd" path="res://scenes/cone.tscn" id="13_voycf"]
+[ext_resource type="PackedScene" uid="uid://tljwmy8egh4f" path="res://scenes/barrier.tscn" id="14_yeqkk"]
+[ext_resource type="PackedScene" uid="uid://db80et7pp1gtg" path="res://props/Tree3.glb" id="15_shk6o"]
+[ext_resource type="PackedScene" uid="uid://if0x67fbi6ay" path="res://scenes/small_barrier.tscn" id="16_shk6o"]
+[ext_resource type="Script" uid="uid://bm5ob0vel8fia" path="res://scripts/finish_line.gd" id="17_7x2w3"]
+[ext_resource type="PackedScene" uid="uid://bk2nkg4hj6g" path="res://props/finish line.fbx" id="18_1qq5m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mgdar"]
 font_size = 40
@@ -33,6 +39,12 @@ background_mode = 2
 sky = SubResource("Sky_fr4m5")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qr4q7"]
+size = Vector3(1.8171387, 6.199951, 1.6970215)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_smio7"]
+size = Vector3(6.533085, 6.5561523, 0.70251465)
 
 [node name="ArcadeDemo" type="Node3D"]
 
@@ -96,6 +108,7 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_mgdar")
 
 [node name="GameOverUI" type="PanelContainer" parent="GUI"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = 187.0
@@ -155,3 +168,65 @@ environment = SubResource("Environment_ernvw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Track"]
 transform = Transform3D(0.527563, -0.46986827, 0.7077437, -1.33511e-08, 0.83311415, 0.5531012, -0.849516, -0.2917957, 0.43952015, 0, 2.26991, 0)
+
+[node name="cone" parent="Track" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.962652, 0.12951961, -3.3618271)
+
+[node name="cone" parent="Track/cone" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6779544, 0.12951961, -3.3618271)
+
+[node name="cone" parent="Track/cone/cone" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.662086, 0.12951961, -3.3618274)
+
+[node name="cone" parent="Track/cone/cone/cone" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04280758, 0.12951961, 4.4463377)
+
+[node name="cone2" parent="Track/cone/cone/cone" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 294.50092, -0.15062311, -3.3618279)
+
+[node name="cone" parent="Track/cone/cone/cone/cone2" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.042816162, -0.064628094, 4.4463377)
+
+[node name="cone2" parent="Track/cone" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 294.50092, -0.04380253, -3.3618271)
+
+[node name="cone" parent="Track/cone/cone2" instance=ExtResource("13_voycf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.677948, 0.03042379, -3.3618274)
+
+[node name="Barrier" parent="Track" instance=ExtResource("14_yeqkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9984697, 0.60972714, 4.838)
+
+[node name="Barrier2" parent="Track" instance=ExtResource("14_yeqkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4004503, 0.5604421, 4.839617)
+
+[node name="tree" type="StaticBody3D" parent="Track"]
+transform = Transform3D(0.0027750258, 0.9999961, 0, -0.9999961, 0.0027750258, 0, 0, 0, 1, -6.454786, 0, -47.123383)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Track/tree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5121355, 3.2196598, -0.011108398)
+shape = SubResource("BoxShape3D_qr4q7")
+
+[node name="Tree32" parent="Track/tree" instance=ExtResource("15_shk6o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4284258, 0, 0.034427643)
+
+[node name="small barrier" parent="Track" instance=ExtResource("16_shk6o")]
+transform = Transform3D(-0.53385067, 0, 0.8455788, 0, 1, 0, -0.8455788, 0, -0.53385067, 0.36110055, 0, -46.032547)
+
+[node name="small barrier" parent="Track/small barrier" instance=ExtResource("16_shk6o")]
+transform = Transform3D(-0.9998767, 0, 0.015707314, 0, 1, 0, -0.015707314, 0, -0.9998767, 1.4432869, 0.09231138, -4.033968)
+
+[node name="small barrier" parent="Track/small barrier/small barrier" instance=ExtResource("16_shk6o")]
+transform = Transform3D(-0.9998773, 0, 0.015707284, 0, 1, 0, -0.015707284, 0, -0.9998773, 2.4205055, 0.005034089, -1.5154247)
+
+[node name="finish line" type="Area3D" parent="Track"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.066259)
+script = ExtResource("17_7x2w3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Track/finish line"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.039384842, 2.7780762, 2.086731)
+shape = SubResource("BoxShape3D_smio7")
+
+[node name="finish line" parent="Track/finish line" instance=ExtResource("18_1qq5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.026842)
+
+[connection signal="body_entered" from="Track/finish line" to="Track/finish line" method="_on_area_3d_body_entered"]
